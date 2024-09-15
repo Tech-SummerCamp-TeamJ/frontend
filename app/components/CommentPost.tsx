@@ -1,28 +1,45 @@
 import { useState } from "react";
-import { postComment } from "../api/postComment";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import PlaceIcon from "@mui/icons-material/Place";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import ArrowDropUpOutlinedIcon from "@mui/icons-material/ArrowDropUpOutlined";
+import axios from "axios";
 
 const CommentPost = ({ onClose }: { onClose: () => void }) => {
-  const [selectedIcon, setSelectedIcon] = useState({
+  const [content, setContent] = useState("");
+  const [category, setCategory] = useState({
     icon: <ArrowDropUpOutlinedIcon />,
     text: "選択",
   });
 
-  const handleSelect = (icon: any, text: string) => {
-    setSelectedIcon({ icon, text });
+  const handleSelect = (icon: JSX.Element, text: string) => {
+    setCategory({ icon, text });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
 
-    formData.append("select", selectedIcon.text);
+    try {
+      const url = `https://app.apidog.com/project/666106/groups/1/events/1/comments`;
+      const response = await axios.post(
+        url,
+        {
+          content: content,
+          category: category.text,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "User-Agent": "Apidog/1.0.0 (https://apidog.com)",
+          },
+        }
+      );
 
-    await postComment(formData);
-    onClose();
+      console.log(response.data);
+      onClose();
+    } catch (error) {
+      console.error("Error posting comment:", error);
+    }
   };
 
   return (
@@ -30,13 +47,13 @@ const CommentPost = ({ onClose }: { onClose: () => void }) => {
       <div className="flex justify-between">
         <div className="dropdown dropdown-top">
           <div tabIndex={0} role="button" className="btn mb-4">
-            {selectedIcon.icon ? (
+            {category.icon ? (
               <div className="flex items-center">
-                {selectedIcon.icon}
-                <span className="ml-2">{selectedIcon.text}</span>
+                {category.icon}
+                <span className="ml-2">{category.text}</span>
               </div>
             ) : (
-              selectedIcon.text
+              category.text
             )}
           </div>
           <ul
@@ -80,6 +97,8 @@ const CommentPost = ({ onClose }: { onClose: () => void }) => {
         name="name"
         placeholder="コメントを入力"
         className="border w-full"
+        onChange={(e) => setContent(e.target.value)}
+        value={content}
       ></textarea>
     </form>
   );

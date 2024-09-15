@@ -7,11 +7,10 @@ type CardProps = {
 // カードの枠を作成するコンポーネントです。
 const Card = ({ children }: CardProps) => {
 	return (
-		<div className="w-full p-4 bg-white border border-gray-200 rounded-lg shadow-md">
+		<div className="w-full max-w-sm p-4 bg-white rounded-lg shadow-md overflow-hidden break-words">
 			{children}
 		</div>
 	);
 };
-
 
 export default Card;

@@ -6,33 +6,22 @@ import HomeHeader from "./components/Header/HomeHeader";
 import LoginButton from "./components/Buttons/LoginButton";
 import Card from "./components/Card";
 import Tag from "./components/Tag";
+import HomeIcon from "@mui/icons-material/Home"; // MUIのアイコンをインポート
 
 const page = () => {
 	return (
 		<>
 			<RouteHeader title="Sign In" showBackButton={false} />
-			{/* <div className="flex items-center justify-center min-h-screen bg-gray-50">
-				<Card>
-					<Tag text="ログイン" />
-
-					<h2 className="my-4 text-2xl font-bold text-center">
-						Uneiへようこそ
-					</h2>
-
-					<LoginButton
-						text="Discordでログイン"
-						icon={<ArrowBackIosNewIcon />}
+			<Card>
+				<div>
+        <HomeIcon sx={{ color: "#BDE8F5" }} />
+					<Tag
+						name="Home"
+						icon={<HomeIcon sx={{ color: "#BDE8F5" }} />}
 					/>
-
-					<LoginButton
-						text="Slackでログイン"
-						icon={<SlackIcon />}
-						disabled
-					/>
-
-					<Reactions />
-				</Card>
-			</div> */}
+					<Tag name="Settings" color="#F5BDBD" />
+				</div>
+			</Card>
 		</>
 	);
 };

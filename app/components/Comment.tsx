@@ -1,7 +1,6 @@
 "use client";
 
 import { FC } from "react";
-import Stamp from "./Stamp";
 import type { Comment } from "../types/getEventDetail";
 import Tags from "./Tag/Tags";
 import Stamps from "./Stamps";
